@@ -27,7 +27,7 @@ class Shorty(object):
 class Resolver(object):
     """A service to resolve urls"""
     def __init__(self):
-        self.name = "generic service"
+        raise NotImplementedError("Abstract Resolver cannot be initialized.")
 
     def testURL(self, url):
         if not url.startswith(self.name):
