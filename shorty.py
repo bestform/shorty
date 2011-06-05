@@ -42,7 +42,7 @@ Shortener
 class Shortener(object):
     """A service to shorten urls"""
     def __init__(self):
-        raise NotImplementedError("Abstract Resolver cannot be initialized.")
+        raise NotImplementedError("Abstract Shortener cannot be initialized.")
 
     def shorten(self, url):
         encodedURL = urllib.quote_plus(url)
