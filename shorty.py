@@ -11,7 +11,9 @@ class Shorty(object):
             "http://j.mp" : ResolverBITLY("http://j.mp"),
         }
         self.shortenerMap = {
-            "http://is.gd" : ShortenerISGD()
+            "http://is.gd" : ShortenerISGD(),
+            "http://bit.ly" : ShortenerBITLY("http://bit.ly"),
+            "http://j.mp" : ShortenerBITLY("http://j.mp")
         }
 
     def getShortenerByName(self, name):
@@ -55,6 +57,11 @@ class ShortenerISGD(Shortener):
         self.name = "http://is.gd"
         self.api = "http://is.gd/create.php?format=simple&url="
 
+class ShortenerBITLY(Shortener):
+    """A shortener for bit.ly"""
+    def __init__(self, name):
+        self.name = name
+        self.api = "http://api.bitly.com/v3/shorten?login="+settings.bitly_login+"&apiKey="+settings.bitly_api_key+"&format=txt&longUrl="
 
 """
 Resolver
