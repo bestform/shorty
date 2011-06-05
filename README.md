@@ -9,6 +9,9 @@ Currently there are only two resolvers implemented, for is.gd and bit.ly
 To use the library with bit.ly, you have to create a (free) account to get an API key.
 Just copy the file `settings.py.empty` to `settings.py` and insert your login and key.
 
+Unit Tests
+==========
+
 You can run the unit tests by either running test.py or by running
 
     python -m unittest discover
