@@ -1,5 +1,5 @@
 About
------
+=====
 
 shorty is a python library for dealing with url shortening services.
 It is in its very early stages, so please feel free to fork it and help.
@@ -16,7 +16,7 @@ You can run the unit tests by either running test.py or by running
 on python 2.7 or later.
 
 Example usage
--------------
+=============
 
     >>> import shorty
     >>> myShorty = shorty.Shorty()
