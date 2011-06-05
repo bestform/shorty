@@ -23,8 +23,9 @@ Example usage
 
     >>> import shorty
     >>> myShorty = shorty.Shorty()
-    >>> url = "http://is.gd/T9vnnv"
-    >>> resolver = myShorty.getResolverByURL(url)
-    >>> resolver.resolve(url)
+    >>> shortener = myShorty.getShortenerByName("http://is.gd")
+    >>> shortener.shorten("http://tonstube.de")
+    'http://is.gd/T9vnnv'
+    >>> resolver = myShorty.getResolverByURL("http://is.gd/T9vnnv")
+    >>> resolver.resolve("http://is.gd/T9vnnv")
     'http://tonstube.de'
-
