@@ -10,6 +10,9 @@ class TestURLFuntions(unittest.TestCase):
             {"name": "http://bit.ly", "url": "http://tonstube.de/", "shorturl": "http://bit.ly/klSF10", "handle": "klSF10"},
             {"name": "http://j.mp", "url": "http://tonstube.de/", "shorturl": "http://j.mp/klSF10", "handle": "klSF10"},
         ]
+        self.shortenerPacks = [
+            {"name": "http://is.gd", "url": "http://tonstube.de"}
+        ]
 
     def testUnknowResolver(self):
         self.assertRaises(ValueError, self.shorty.getResolverByName, "unknown")
@@ -22,6 +25,15 @@ class TestURLFuntions(unittest.TestCase):
             self.assertRaises(AttributeError, resolver.resolve, res["name"])
             self.assertEqual(resolver.getHandle(res["shorturl"]), res["handle"])
             self.assertEqual(resolver.resolve(res["shorturl"]), res["url"])
+
+    def testShorteners(self):
+        for sho in self.shortenerPacks:
+            shortener = self.shorty.getShortenerByName(sho["name"])
+            self.assertEqual(shortener.name, sho["name"])
+            shortURL = shortener.shorten(sho["url"])
+            resolver = self.shorty.getResolverByURL(shortURL)
+            longURL = resolver.resolve(shortURL)
+            self.assertEqual(sho["url"], longURL)
 
 if __name__ == "__main__":
     unittest.main()

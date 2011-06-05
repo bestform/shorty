@@ -1,4 +1,5 @@
 import urllib2
+import urllib
 import settings
 
 class Shorty(object):
@@ -9,6 +10,16 @@ class Shorty(object):
             "http://bit.ly" : ResolverBITLY("http://bit.ly"),
             "http://j.mp" : ResolverBITLY("http://j.mp"),
         }
+        self.shortenerMap = {
+            "http://is.gd" : ShortenerISGD()
+        }
+
+    def getShortenerByName(self, name):
+        try:
+            shortener = self.shortenerMap[name]
+        except KeyError:
+            raise ValueError("unknown resolver: " + name)
+        return shortener
 
     def getResolverByName(self, name):
         try:
@@ -23,6 +34,31 @@ class Shorty(object):
         name = url[0:url.find("/", 7)]
         return self.getResolverByName(name)
 
+
+"""
+Shortener
+"""
+
+class Shortener(object):
+    """A service to shorten urls"""
+    def __init__(self):
+        raise NotImplementedError("Abstract Resolver cannot be initialized.")
+
+    def shorten(self, url):
+        encodedURL = urllib.quote_plus(url)
+        ret = urllib2.urlopen(self.api+encodedURL)
+        return ret.read().rstrip('\n')
+
+class ShortenerISGD(Shortener):
+    """A shortener for is.gd"""
+    def __init__(self):
+        self.name = "http://is.gd"
+        self.api = "http://is.gd/create.php?format=simple&url="
+
+
+"""
+Resolver
+"""
 
 class Resolver(object):
     """A service to resolve urls"""
