@@ -20,7 +20,7 @@ class Shorty(object):
         try:
             shortener = self.shortenerMap[name]
         except KeyError:
-            raise ValueError("unknown resolver: " + name)
+            raise ValueError("unknown shortener: " + name)
         return shortener
 
     def getResolverByName(self, name):
