@@ -9,11 +9,13 @@ class TestURLFuntions(unittest.TestCase):
             {"name": "http://is.gd", "url": "http://tonstube.de", "shorturl": "http://is.gd/T9vnnv", "handle": "T9vnnv"},
             {"name": "http://bit.ly", "url": "http://tonstube.de/", "shorturl": "http://bit.ly/klSF10", "handle": "klSF10"},
             {"name": "http://j.mp", "url": "http://tonstube.de/", "shorturl": "http://j.mp/klSF10", "handle": "klSF10"},
+            {"name": "http://goo.gl", "url": "http://tonstube.de/", "shorturl": "http://goo.gl/ezv5G", "handle": "ezv5G"},
         ]
         self.shortenerPacks = [
             {"name": "http://is.gd", "url": "http://tonstube.de"},
             {"name": "http://bit.ly", "url": "http://tonstube.de/"},
-            {"name": "http://j.mp", "url": "http://tonstube.de/"}
+            {"name": "http://j.mp", "url": "http://tonstube.de/"},
+            {"name": "http://goo.gl", "url": "http://tonstube.de/"}
         ]
 
     def testUnknowResolver(self):
