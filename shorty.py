@@ -1,6 +1,7 @@
 import urllib2
 import urllib
 import settings
+import json
 
 class Shorty(object):
     """resolves a given short url if the service is supported"""
@@ -9,11 +10,13 @@ class Shorty(object):
             "http://is.gd" : ResolverISGD(),
             "http://bit.ly" : ResolverBITLY("http://bit.ly"),
             "http://j.mp" : ResolverBITLY("http://j.mp"),
+            "http://goo.gl" : ResolverGOOGL()
         }
         self.shortenerMap = {
             "http://is.gd" : ShortenerISGD(),
             "http://bit.ly" : ShortenerBITLY("http://bit.ly"),
-            "http://j.mp" : ShortenerBITLY("http://j.mp")
+            "http://j.mp" : ShortenerBITLY("http://j.mp"),
+            "http://goo.gl" : ShortenerGOOGL()
         }
 
     def getShortenerByName(self, name):
@@ -63,6 +66,22 @@ class ShortenerBITLY(Shortener):
         self.name = name
         self.api = "http://api.bitly.com/v3/shorten?login="+settings.bitly_login+"&apiKey="+settings.bitly_api_key+"&format=txt&longUrl="
 
+class ShortenerGOOGL(Shortener):
+    """A shortener for goo.gl"""
+    def __init__(self):
+        self.name = "http://goo.gl"
+        self.api = "https://www.googleapis.com/urlshortener/v1/url"
+        self.data = "{\"longUrl\": \"%s\"}"
+        self.headers =  {"Content-Type": "application/json"}
+
+    def shorten(self, url):
+        data = self.data % url
+        req = urllib2.Request(self.api, data, self.headers)
+        ret = urllib2.urlopen(req)
+        retjson = json.loads(ret.read())
+        return retjson["id"]
+
+
 """
 Resolver
 """
@@ -101,4 +120,15 @@ class ResolverBITLY(Resolver):
     def __init__(self, name):
         self.name = name
         self.api = "http://api.bitly.com/v3/expand?apiKey="+settings.bitly_api_key+"&login="+settings.bitly_login+"&format=txt&hash="
-        
+
+class ResolverGOOGL(Resolver):
+    """A resolver for goo.gl"""
+    def __init__(self):
+        self.name = "http://goo.gl"
+        self.api = "https://www.googleapis.com/urlshortener/v1/url?shortUrl=http://goo.gl/"
+
+    def resolve(self, url):
+        result = super(ResolverGOOGL, self).resolve(url)
+        jsonresult = json.loads(result)
+        return jsonresult["longUrl"]
+
