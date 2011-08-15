@@ -2,6 +2,7 @@ import urllib2
 import urllib
 import settings
 import json
+import re
 
 class Shorty(object):
     """resolves a given short url if the service is supported"""
@@ -64,7 +65,7 @@ class ShortenerBITLY(Shortener):
     """A shortener for bit.ly"""
     def __init__(self, name):
         self.name = name
-	domain = name[7:]
+	domain = re.sub("^http[s]?://", "", name)
         self.api = "http://api.bitly.com/v3/shorten?login="+settings.bitly_login+"&apiKey="+settings.bitly_api_key+"&format=txt&domain="+domain+"&longUrl="
 
 class ShortenerGOOGL(Shortener):
@@ -120,7 +121,7 @@ class ResolverBITLY(Resolver):
     """A resolver for bit.ly"""
     def __init__(self, name):
         self.name = name
-	domain = name[7:]
+	domain = re.sub("^http[s]?://", "", name)
         self.api = "http://api.bitly.com/v3/expand?apiKey="+settings.bitly_api_key+"&login="+settings.bitly_login+"&format=txt&domain="+domain+"&hash="
 
 class ResolverGOOGL(Resolver):

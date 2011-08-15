@@ -38,7 +38,7 @@ class TestURLFuntions(unittest.TestCase):
             resolver = self.shorty.getResolverByURL(shortURL)
             longURL = resolver.resolve(shortURL)
             self.assertEqual(sho["url"], longURL)
-	    self.assertEqual(sho["name"], shortURL[0:shortURL.find("/", 7)])
+	    self.assertTrue(shortURL.startswith(sho["name"]))
 
 if __name__ == "__main__":
     unittest.main()
