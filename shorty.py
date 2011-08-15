@@ -64,7 +64,8 @@ class ShortenerBITLY(Shortener):
     """A shortener for bit.ly"""
     def __init__(self, name):
         self.name = name
-        self.api = "http://api.bitly.com/v3/shorten?login="+settings.bitly_login+"&apiKey="+settings.bitly_api_key+"&format=txt&longUrl="
+	domain = name[7:]
+        self.api = "http://api.bitly.com/v3/shorten?login="+settings.bitly_login+"&apiKey="+settings.bitly_api_key+"&format=txt&domain="+domain+"&longUrl="
 
 class ShortenerGOOGL(Shortener):
     """A shortener for goo.gl"""
@@ -119,7 +120,8 @@ class ResolverBITLY(Resolver):
     """A resolver for bit.ly"""
     def __init__(self, name):
         self.name = name
-        self.api = "http://api.bitly.com/v3/expand?apiKey="+settings.bitly_api_key+"&login="+settings.bitly_login+"&format=txt&hash="
+	domain = name[7:]
+        self.api = "http://api.bitly.com/v3/expand?apiKey="+settings.bitly_api_key+"&login="+settings.bitly_login+"&format=txt&domain="+domain+"&hash="
 
 class ResolverGOOGL(Resolver):
     """A resolver for goo.gl"""
